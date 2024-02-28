@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+
+    # Container name
+    container_name: sample_mysql_dummy_data
+
+    # Default MYSQL image setup
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlpass
+      MYSQL_DATABASE: sample
+
+    # Copies the setup.sql to db init folder
+    # The image automatically uses the setup.sql to initiate the database
+    volumes:
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
+
+    # Can access MYSQL (running on port 3306 in container) from native device localhost:3307
+    ports:
+      - "3307:3306"
